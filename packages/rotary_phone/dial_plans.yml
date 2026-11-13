@@ -39,8 +39,8 @@ c911:
 # --- Add more commands below (copy these templates) ---
 #
 # Play an audio file (MP3) through the rotary phone speaker:
-# c5:
-#   say: "Playing your song."
+# c6:
+#   say: ""
 #   actions:
 #     - action: text.set_value
 #       target:
