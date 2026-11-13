@@ -7,6 +7,17 @@ c1:
   say: "Welcome to the Home Assistant rotary phone."
 c2:
   say: "Hi you are on HomeAssistant help line. Dial 331 for splitfalp playlist. Or dial 300 to stop splitflap display"
+
+c5:
+  say: "Playing your song."
+  actions:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.rotary_phone_speaker
+      data:
+        media_content_type: music
+        media_content_id: "/www/phone/rick-roll-link.mp3"
+
 c12:
   say: >-
     {% set t = states('sensor.outside_temperature') %}
