@@ -3,12 +3,12 @@ automation:
     alias: "Rotary Phone Handle Dial"
     mode: single
     trigger:
-      - platform: state
-        entity_id: sensor.rotary_phone_dial
+      - platform: mqtt
+        topic: rotarydial/dial
     condition:
       - condition: template
-        value_template: "{{ trigger.to_state.state not in ['', 'unknown', 'unavailable', 'none'] }}"
+        value_template: "{{ trigger.payload not in ['', 'unknown', 'unavailable', 'none'] }}"
     action:
       - service: script.rotary_phone_handler
         data:
-          dialed: "{{ trigger.to_state.state }}"
+          dialed: "{{ trigger.payload }}"
