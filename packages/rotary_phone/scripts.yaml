@@ -1,18 +1,3 @@
-automation:
-  - id: rotary_phone_handle_dial
-    alias: "Rotary Phone Handle Dial"
-    mode: single
-    trigger:
-      - platform: state
-        entity_id: sensor.rotary_phone_dial
-    condition:
-      - condition: template
-        value_template: "{{ trigger.to_state.state not in ['', 'unknown', 'unavailable', 'none'] }}"
-    action:
-      - service: script.rotary_phone_handler
-        data:
-          dialed: "{{ trigger.to_state.state }}"
-
 script:
   rotary_phone_handler:
     alias: "Rotary Phone Handler"
@@ -26,13 +11,11 @@ script:
           plan: !include dial_plans.yml
           entry: "{{ plan.get('c' ~ code, {'say': 'The number you have dialed is not recognized. Please hang up and try again.'}) }}"
       - parallel:
-          # Branch 1: actions run immediately, in list order
           - repeat:
               for_each: "{{ entry.get('actions', []) }}"
               sequence:
                 - action: "{{ repeat.item.action }}"
                   data: "{{ repeat.item.get('data', {}) }}"
-          # Branch 2: voice renders (about 5 s) while the actions already run
           - if:
               - condition: template
                 value_template: "{{ entry.get('say', '') != '' }}"

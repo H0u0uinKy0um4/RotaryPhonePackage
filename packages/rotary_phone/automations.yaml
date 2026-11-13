@@ -1,0 +1,14 @@
+automation:
+  - id: rotary_phone_handle_dial
+    alias: "Rotary Phone Handle Dial"
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: sensor.rotary_phone_dial
+    condition:
+      - condition: template
+        value_template: "{{ trigger.to_state.state not in ['', 'unknown', 'unavailable', 'none'] }}"
+    action:
+      - service: script.rotary_phone_handler
+        data:
+          dialed: "{{ trigger.to_state.state }}"
