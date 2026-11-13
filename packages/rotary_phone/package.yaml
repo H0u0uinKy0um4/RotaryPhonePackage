@@ -1,0 +1,55 @@
+script:
+  rotary_phone_handler:
+    alias: "Rotary Phone Handler"
+    mode: restart
+    fields:
+      dialed:
+        description: "The dialed number payload"
+    sequence:
+      - variables:
+          code: "{{ dialed | string | regex_replace('[^0-9]', '') }}"
+          plan:
+            c1:
+              say: "Welcome to the Home Assistant rotary phone."
+            c2:
+              say: "Hi you are on HomeAssistant help line. Dial 331 for splitfalp playlist. Or dial 300 to stop splitflap display"
+            c12:
+              say: >-
+                {% set t = states('sensor.outside_temperature') %}
+                {% if t | is_number %}The current temperature outside is {{ t | float | round(0) | int }} degrees.{% else %}The outside temperature is currently not available.{% endif %}
+            c331:
+              say: "Updating splitflap display."
+              actions:
+                - action: splitflap_os.run_saved_playlist
+                  data:
+                    name: "0to9"
+            c300:
+              say: "Stopping the splitflap app."
+              actions:
+                - action: splitflap_os.stop_app
+            c42:
+              say: "The answer to life, the universe, and everything."
+            c911:
+              say: "This is an automated system and cannot place emergency calls."
+          entry: "{{ plan.get('c' ~ code, {'say': 'The number you have dialed is not recognized. Please hang up and try again.'}) }}"
+      - parallel:
+          # Branch 1: actions run immediately, in list order
+          - repeat:
+              for_each: "{{ entry.get('actions', []) }}"
+              sequence:
+                - action: "{{ repeat.item.action }}"
+                  data: "{{ repeat.item.get('data', {}) }}"
+          # Branch 2: voice renders (about 5 s) while the actions already run
+          - if:
+              - condition: template
+                value_template: "{{ entry.get('say', '') != '' }}"
+            then:
+              - action: shell_command.kokoro_render
+                data:
+                  text: "{{ entry.say }}"
+              - action: media_player.play_media
+                target:
+                  entity_id: media_player.rotary_phone_speaker
+                data:
+                  media_content_type: music
+                  media_content_id: "http://10.0.1.46:8123/local/phone/dyn.mp3?v={{ now().timestamp() | int }}"

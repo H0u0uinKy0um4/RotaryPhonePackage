@@ -1,0 +1,15 @@
+# Runtime-generated media (Kokoro TTS output)
+www/phone/dyn.mp3
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
