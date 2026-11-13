@@ -16,8 +16,7 @@ c5:
         entity_id: media_player.rotary_phone_speaker
       data:
         media_content_type: music
-        media_content_id: "/www/phone/rick-roll-link.mp3"
-
+        media_content_id: "http://10.0.1.46:8123/local/phone/rick-roll-link.mp3"
 c12:
   say: >-
     {% set t = states('sensor.outside_temperature') %}
