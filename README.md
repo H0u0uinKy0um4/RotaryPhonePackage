@@ -75,5 +75,7 @@ Docker users: `git pull` is enough; reload scripts or restart Home Assistant.
   (script, automation, sensor, ...) live inside it. Domain-named files like
   `scripts.yaml` would create a package called "scripts" and are avoided.
 - If you prefer a flat layout, move `rotary_phone.yaml` to `packages/rotary_phone.yaml`.
+- Add new dial commands in `packages/rotary_phone/dial_plans.yaml` (key `c<digits>`).
+  No need to edit the script. Reload YAML packages after changes.
 - All automations, scripts and sensors live inside `packages/rotary_phone/` to keep
   the package portable. Avoid hardcoded absolute paths.
