@@ -59,12 +59,9 @@ script:
               - condition: template
                 value_template: "{{ entry.get('say', '') != '' }}"
             then:
-              - action: shell_command.kokoro_render
-                data:
-                  text: "{{ entry.say }}"
-              - action: media_player.play_media
+              - action: tts.speak
                 target:
-                  entity_id: media_player.rotary_phone_speaker
+                  entity_id: tts.kokoro
                 data:
-                  media_content_type: music
-                  media_content_id: "http://10.0.1.46:8123/local/phone/dyn.mp3?v={{ now().timestamp() | int }}"
+                  media_player_entity_id: media_player.rotary_phone_speaker
+                  message: "{{ entry.say }}"
