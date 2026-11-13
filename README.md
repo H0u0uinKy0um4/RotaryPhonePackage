@@ -9,9 +9,7 @@ which renders a Kokoro TTS response and optionally runs actions (e.g. controllin
 
 ```
 packages/rotary_phone/      # drop into /config/packages/
-  scripts.yaml              # script: domain file (HA package convention)
-  automations.yaml          # automation: domain file (add when needed)
-  sensors.yaml              # sensor: domain file (add when needed)
+  rotary_phone.yaml         # one package named "rotary_phone" (script/automation/sensor keys inside)
   content/                  # reserved for extra package files
 www/phone/                  # served at /local/phone/
   dyn.mp3                   # generated at runtime by Kokoro TTS (gitignored)
@@ -64,10 +62,10 @@ Docker users: `git pull` is enough; reload scripts or restart Home Assistant.
 ## Notes
 
 - `www/phone/dyn.mp3` is generated at runtime and is intentionally gitignored.
-- Home Assistant's package loader expects files inside `packages/rotary_phone/` to be
-  named after HA domains (`scripts.yaml`, `automations.yaml`, `sensors.yaml`, ...).
-  `package.yaml` is intentionally NOT used.
-- Alternative (flat) layout: move `scripts.yaml` to `packages/rotary_phone.yaml` if your
-  setup uses `packages: !include_dir_named packages` without subfolders.
+- With `packages: !include_dir_named packages`, the *filename* becomes the package name.
+  So the file is named `rotary_phone.yaml` (package "rotary_phone"), and all domains
+  (script, automation, sensor, ...) live inside it. Domain-named files like
+  `scripts.yaml` would create a package called "scripts" and are avoided.
+- If you prefer a flat layout, move `rotary_phone.yaml` to `packages/rotary_phone.yaml`.
 - All automations, scripts and sensors live inside `packages/rotary_phone/` to keep
   the package portable. Avoid hardcoded absolute paths.

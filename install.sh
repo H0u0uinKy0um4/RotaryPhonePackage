@@ -52,7 +52,7 @@ clean_previous() {
   echo "Cleaning previous rotary_phone installation in $CONFIG_DIR ..."
   remove_path "$CONFIG_DIR/packages/rotary_phone"
   # Remove stale domain/legacy files that may have been copied previously
-  for f in package.yaml scripts.yaml automations.yaml sensors.yaml; do
+  for f in package.yaml scripts.yaml automations.yaml sensors.yaml rotary_phone.yaml; do
     if [[ -L "$CONFIG_DIR/packages/$f" ]] || [[ $FORCE -eq 1 && -e "$CONFIG_DIR/packages/$f" ]]; then
       remove_path "$CONFIG_DIR/packages/$f"
     fi
