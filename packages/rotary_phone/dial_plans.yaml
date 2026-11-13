@@ -1,0 +1,35 @@
+# Dial plans for the rotary phone.
+# Keys are "c" + the dialed digits (e.g. c42 for dialing 42).
+# Each entry supports:
+#   say:     text spoken via Kokoro TTS
+#   actions: list of HA actions to run in parallel with the speech
+c1:
+  say: "Welcome to the Home Assistant rotary phone."
+c2:
+  say: "Hi you are on HomeAssistant help line. Dial 331 for splitfalp playlist. Or dial 300 to stop splitflap display"
+c12:
+  say: >-
+    {% set t = states('sensor.outside_temperature') %}
+    {% if t | is_number %}The current temperature outside is {{ t | float | round(0) | int }} degrees.{% else %}The outside temperature is currently not available.{% endif %}
+c331:
+  say: "Updating splitflap display."
+  actions:
+    - action: splitflap_os.run_saved_playlist
+      data:
+        name: "0to9"
+c300:
+  say: "Stopping the splitflap app."
+  actions:
+    - action: splitflap_os.stop_app
+c42:
+  say: "The answer to life, the universe, and everything."
+c911:
+  say: "This is an automated system and cannot place emergency calls."
+
+# --- Add more commands below (copy this template) ---
+# c100:
+#   say: "Your message for dial code 100."
+#   actions:
+#     - action: light.turn_on
+#       data:
+#         entity_id: light.living_room
