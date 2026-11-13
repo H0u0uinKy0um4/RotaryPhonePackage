@@ -47,7 +47,7 @@ remove_path() {
 clean_previous() {
   echo "Cleaning previous rotary_phone installation in $CONFIG_DIR ..."
   remove_path "$CONFIG_DIR/packages/rotary_phone"
-  for f in package.yaml scripts.yaml automations.yaml sensors.yaml rotary_phone.yaml; do
+  for f in package.yaml scripts.yaml automations.yaml sensors.yaml rotary_phone.yaml dial_plans.yaml; do
     if [[ -L "$CONFIG_DIR/packages/$f" ]] || { [[ $FORCE -eq 1 ]] && [[ -e "$CONFIG_DIR/packages/$f" ]]; }; then
       remove_path "$CONFIG_DIR/packages/$f"
     fi

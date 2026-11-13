@@ -23,7 +23,7 @@ script:
     sequence:
       - variables:
           code: "{{ dialed | string | regex_replace('[^0-9]', '') }}"
-          plan: !include dial_plans.yaml
+          plan: !include dial_plans.yml
           entry: "{{ plan.get('c' ~ code, {'say': 'The number you have dialed is not recognized. Please hang up and try again.'}) }}"
       - parallel:
           # Branch 1: actions run immediately, in list order
