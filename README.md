@@ -9,7 +9,9 @@ which renders a Kokoro TTS response and optionally runs actions (e.g. controllin
 
 ```
 packages/rotary_phone/      # drop into /config/packages/
-  rotary_phone.yaml         # one package named "rotary_phone" (script/automation/sensor keys inside)
+  automations.yaml          # automation: domain file (package "automations")
+  scripts.yaml              # script: domain file (package "scripts")
+  dial_plans.yml            # included by scripts.yaml; .yml avoids being loaded as a package
   content/                  # reserved for extra package files
 www/phone/                  # served at /local/phone/
   dyn.mp3                   # generated at runtime by Kokoro TTS (gitignored)
