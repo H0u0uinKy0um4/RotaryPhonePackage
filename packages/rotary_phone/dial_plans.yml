@@ -9,14 +9,12 @@ c2:
   say: "Hi you are on HomeAssistant help line. Dial 331 for splitfalp playlist. Or dial 300 to stop splitflap display"
 
 c5:
-  say: "Playing your song."
+  say: ""
   actions:
-    - action: media_player.play_media
-      target:
-        entity_id: media_player.rotary_phone_speaker
+    - action: mqtt.publish
       data:
-        media_content_type: music
-        media_content_id: "http://10.0.1.46:8123/local/phone/rick-roll-link.mp3"
+        topic: rotarydial/audio/url
+        payload: "http://10.0.1.46:8123/local/phone/rick-roll-link.mp3"
 c12:
   say: >-
     {% set t = states('sensor.outside_temperature') %}
