@@ -36,7 +36,18 @@ c42:
 c911:
   say: "This is an automated system and cannot place emergency calls."
 
-# --- Add more commands below (copy this template) ---
+# --- Add more commands below (copy these templates) ---
+#
+# Play an audio file (MP3) through the rotary phone speaker:
+# c5:
+#   say: "Playing your song."
+#   actions:
+#     - action: text.set_value
+#       target:
+#         entity_id: text.rotary_phone_audio_url
+#       data:
+#         value: "http://10.0.1.46:8123/local/phone/your-file.mp3"
+#
 # c100:
 #   say: "Your message for dial code 100."
 #   actions:
