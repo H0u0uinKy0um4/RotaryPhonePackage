@@ -27,11 +27,19 @@ www/phone/                  # served at /local/phone/
    ```
 3. Restart Home Assistant.
 
-### Docker / Core (symlink)
+### Docker / Core
+
+Home Assistant running in Docker cannot follow symlinks that point outside the
+mounted config volume. Use `--copy` (re-run after `git pull` to update):
 
 ```bash
 git clone https://github.com/H0u0uinKy0um4/RotaryPhonePackage.git
 cd RotaryPhonePackage
+./install.sh --copy /path/to/homeassistant/config
+```
+
+For HAOS / native (no container), symlinks work and update via `git pull`:
+```bash
 ./install.sh /path/to/homeassistant/config
 ```
 
